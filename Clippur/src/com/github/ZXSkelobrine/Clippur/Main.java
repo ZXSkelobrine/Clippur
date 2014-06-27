@@ -27,34 +27,50 @@ import org.jnativehook.keyboard.NativeKeyListener;
 public class Main implements NativeKeyListener {
 
 	static Robot robot;
+
 	static Rectangle rec;
+
 	static List<String> deleteLinks = new ArrayList<>();
+
 	static boolean enableListeners = true;
+
 	static int captureKey = 67;
 	static int captureModifiers = 3;
-	static int[] captureModifiersSet = new int[] { 0, 1 };
 	static int deleteKey = 88;
 	static int deleteModifiers = 3;
+
+	static int[] captureModifiersSet = new int[] { 0, 1 };
 	static int[] deleteModifiersSet = new int[] { 0, 1 };
 
 	public static void main(String[] args) throws IOException {
-		Tray.registerTrayIcon();
+		// Try to...
 		try {
+			// Create the robot instance and...
 			robot = new Robot();
+			// Create the rectangle of the screen size.
 			rec = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+			// Catch any AWT exceptions...
 		} catch (AWTException e) {
+			// And print the stack trace.
 			e.printStackTrace();
 		}
+		//Try to...
 		try {
+			//Register the native hooks...
 			GlobalScreen.registerNativeHook();
+			//Catch any NativeHookExceptions...
 		} catch (NativeHookException ex) {
-			System.err.println("There was a problem registering the native hook.");
-			System.err.println(ex.getMessage());
-
+			//And print "Failed to initialize native hooks."...
+			System.out.println("Failed to initialize native hooks.");
+			//Then print the stack trace...
+			ex.printStackTrace();
+			//Finally exit the program.
 			System.exit(1);
 		}
-
+		//Add this class to the global listeners.
 		GlobalScreen.getInstance().addNativeKeyListener(new Main());
+		//Add the icon to the tray.
+		Tray.registerTrayIcon();
 	}
 
 	@Override
