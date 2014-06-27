@@ -4,10 +4,10 @@ This is a small program that will capture the users screen and upload it to imgu
 
 Key Combinations:
 ----
-Defaults:
-  Ctrl + Shift + C: Capture image and upload to imgur.com. This will paste the link to the clipboard for viewing or sending.
-  Ctrl + Shift + X: Delete the most recent image that has had the delete link saved.
-These bindings can be changed by going to the tray icon and pressing 'Options'
+Defaults:  
+  Ctrl + Shift + C: Capture image and upload to imgur.com. This will paste the link to the clipboard for viewing or sending.  
+  Ctrl + Shift + X: Delete the most recent image that has had the delete link saved.  
+These bindings can be changed by going to the tray icon and pressing 'Options'  
 
 Misc:
 ----
