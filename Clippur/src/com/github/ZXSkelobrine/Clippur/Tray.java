@@ -81,17 +81,17 @@ public class Tray {
 		} catch (AWTException e) {
 			System.out.println("TrayIcon could not be added.");
 		}
-		
+
 		aboutItem.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				About.enableFrame();
 			}
 		});
-		
+
 		optionsItem.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Options.enableFrame();
@@ -110,6 +110,7 @@ public class Tray {
 			return (new ImageIcon(imageURL, description)).getImage();
 		}
 	}
+
 	public static Image createImage(String path, String description, int width, int height) {
 		URL imageURL = Tray.class.getResource(path);
 
@@ -122,6 +123,21 @@ public class Tray {
 			bi.createGraphics().drawImage(io.getImage(), 0, 0, width, height, null);
 			return (new ImageIcon(bi, description)).getImage();
 		}
+	}
+
+	public static void setUploading() {
+		ti.setImage(createImage("/images/tray_upload.png", "Clippur"));
+	}
+
+	public static void setDone() {
+		//TODO work on this - lock up interface for 1sec.
+		ti.setImage(createImage("/images/tray_done.png", "Clippur"));
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		ti.setImage(createImage("/images/tray.png", "Clippur"));
 	}
 
 }
