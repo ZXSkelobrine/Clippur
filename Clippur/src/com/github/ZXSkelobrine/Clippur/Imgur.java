@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -16,13 +15,14 @@ import javax.imageio.ImageIO;
 import org.apache.commons.codec.binary.Base64;
 
 public class Imgur {
+
 	public static String upload(BufferedImage image) throws Exception {
+		Tray.startUploadThread();
 		ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
 		ImageIO.write(image, "png", byteArray);
 		byte[] byteImage = byteArray.toByteArray();
 		String dataImage = new String(Base64.encodeBase64(byteImage));
-		String data = URLEncoder.encode("image", "UTF-8") + "="
-				+ URLEncoder.encode(dataImage, "UTF-8");
+		String data = URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(dataImage, "UTF-8");
 		URL url;
 		url = new URL("https://api.imgur.com/3/image");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -30,11 +30,9 @@ public class Imgur {
 		conn.setDoOutput(true);
 		conn.setDoInput(true);
 		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Authorization", "Client-ID "
-				+ "d8ccfaff5f2da67");
+		conn.setRequestProperty("Authorization", "Client-ID " + "d8ccfaff5f2da67");
 		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Content-Type",
-				"application/x-www-form-urlencoded");
+		conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
 		conn.connect();
 		StringBuilder stb = new StringBuilder();
@@ -43,8 +41,7 @@ public class Imgur {
 		wr.flush();
 
 		// Get the response
-		BufferedReader rd = new BufferedReader(new InputStreamReader(
-				conn.getInputStream()));
+		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		String line;
 		while ((line = rd.readLine()) != null) {
 			stb.append(line).append("\n");
@@ -52,6 +49,7 @@ public class Imgur {
 		wr.close();
 		rd.close();
 		System.out.println("Done");
+		Tray.stopUploadThread();
 		return stb.toString();
 	}
 
@@ -62,16 +60,13 @@ public class Imgur {
 		conn.setDoOutput(true);
 		conn.setDoInput(true);
 		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Authorization", "Client-ID "
-				+ "d8ccfaff5f2da67");
+		conn.setRequestProperty("Authorization", "Client-ID " + "d8ccfaff5f2da67");
 		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Content-Type",
-				"application/x-www-form-urlencoded");
+		conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 		conn.connect();
 		StringBuilder stb = new StringBuilder();
 		// Get the response
-		BufferedReader rd = new BufferedReader(new InputStreamReader(
-				conn.getInputStream()));
+		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		String line;
 		while ((line = rd.readLine()) != null) {
 			stb.append(line).append("\n");

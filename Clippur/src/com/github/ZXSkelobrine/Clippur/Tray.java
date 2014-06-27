@@ -21,6 +21,32 @@ public class Tray {
 	static TrayIcon ti;
 	static SystemTray st;
 	static Menu menu;
+	private static Thread thread = new Thread() {
+		@Override
+		public void run() {
+			ti.setImage(createImage("/images/tray.png", "Clippur"));
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+			}
+			ti.setImage(createImage("/images/tray_upload.png", "Clippur"));
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+			}
+		}
+		@Override
+		public void interrupt() {
+			ti.setImage(createImage("/images/tray_done.png", "Clippur"));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			ti.setImage(createImage("/images/tray.png", "Clippur"));
+			super.interrupt();
+		}
+	};
 
 	public static boolean registerTrayIcon() {
 		if (!SystemTray.isSupported()) return false;
@@ -81,17 +107,17 @@ public class Tray {
 		} catch (AWTException e) {
 			System.out.println("TrayIcon could not be added.");
 		}
-		
+
 		aboutItem.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				About.enableFrame();
 			}
 		});
-		
+
 		optionsItem.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Options.enableFrame();
@@ -110,6 +136,7 @@ public class Tray {
 			return (new ImageIcon(imageURL, description)).getImage();
 		}
 	}
+
 	public static Image createImage(String path, String description, int width, int height) {
 		URL imageURL = Tray.class.getResource(path);
 
@@ -123,5 +150,15 @@ public class Tray {
 			return (new ImageIcon(bi, description)).getImage();
 		}
 	}
+	
+	public static void startUploadThread(){
+		thread.start();
+	}
+	
+	public static void stopUploadThread(){
+		thread.interrupt();
+		
+	}
+	
 
 }
