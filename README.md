@@ -12,3 +12,7 @@ These bindings can be changed by going to the tray icon and pressing 'Options'
 Misc:
 ----
 If you close the program and want to delete an image, you can go to C:/Clippur/Logs and find a text file for the given day. Inside this file it will store the time that the image was taken at, the viewing link and the deletion link. Use the deletion link to remove the file.
+
+Download:
+----
+You can download the program from the Output folder. There is an exe version and jar.
