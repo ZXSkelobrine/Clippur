@@ -16,3 +16,7 @@ If you close the program and want to delete an image, you can go to C:/Clippur/L
 Download:
 ----
 You can download the program from the Output folder. There is an exe version and jar.
+
+Reddit:
+----
+There is a bit more background to this project on this post: http://www.reddit.com/r/somethingimade/comments/299oc1/i_made_a_screenshot_program/ on somethingimade.
